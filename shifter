@@ -1,0 +1,44 @@
+#!/bin/bash
+
+#Go to the directory where the scripts are held.
+
+cd ~/.local/bin/tools || exit
+
+#Check if RV exists, if it doesn't make it and give it X value.
+
+if ! [ -f RV ]
+then echo 6500 > RV
+fi
+
+#Setting the local variable to file RV's value.
+num=$(<RV)
+
+
+colder() {
+#Check if the number is under an arbitrary limit, and if so increment by X.
+
+if (( $num <= 6500 ))
+then
+	echo "$((num+=250))" > RV
+
+	redshift -O ${num}
+	cat RV
+	dunstify -r 454 -u low "Colour Temperature :  $(<RV)"
+fi
+}
+
+
+warmer() {
+#Check if the number is under an arbitrary limit, and if so increment by X.
+
+if (( $num >= 1500 ))
+then
+	echo "$((num-=250))" > RV
+
+	redshift -O ${num}
+	cat RV
+	dunstify -r 454 -u low "Colour Temperature :  $(<RV)"
+fi
+}
+
+"$@"
