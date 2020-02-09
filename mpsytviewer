@@ -59,7 +59,7 @@ echo $link
 	fi
 
 echo "$link" | xsel -ib
-echo " ;$link ;$title"  >> ~/$HOME/$USER/mpsytHistory
+echo " ;$link ;$title"  >> $HOME/mpsytHistory
 mpv --ytdl-format=22 "$link" || mpv "$link"
 
 fi
