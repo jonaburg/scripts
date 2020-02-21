@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#color temperature/brightness adjustment scripts (saves to file)
 #Go to the directory where the scripts are held.
 
 cd ~/.local/bin/utilities || exit
