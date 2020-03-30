@@ -5,10 +5,7 @@
 cd ~/.local/bin/utilities || exit
 
 #Check if RV exists, if it doesn't make it and give it X value.
-
-if ! [ -f RV ]
-then echo 6500 > RV
-fi
+[[ -f RV ]] || echo 6500 > RV
 
 #Setting the local variable to file RV's value.
 num=$(<RV)

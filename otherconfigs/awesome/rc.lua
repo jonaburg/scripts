@@ -93,9 +93,10 @@ local themes = {
     "vertex",          -- 10
     "jontheme",        -- 11
     "winter",          -- 12
+    "spring",          -- 13
 }
 
-local chosen_theme = themes[12]
+local chosen_theme = themes[13]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
 local terminal     = "st"
