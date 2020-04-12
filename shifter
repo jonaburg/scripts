@@ -47,6 +47,7 @@ fi
 
 if (( $num2 < 100 ))
 then echo "$((num2+=25))" > BV
+sudo ddcutil setvcp --bus 1 10 $num2
 sudo ddcutil setvcp --bus 2 10 $num2
 	dunstify -r 454 -u low "Main Monitor Brightness :  $(<BV)"
 fi
@@ -60,6 +61,7 @@ fi
 
 if (( $num2 > 0 ))
 then	echo "$((num2-=25))" > BV
+sudo ddcutil setvcp --bus 1 10 $num2
 sudo ddcutil setvcp --bus 2 10 $num2
 	dunstify -r 454 -u low "Main Monitor Brightness :  $(<BV)"
 fi

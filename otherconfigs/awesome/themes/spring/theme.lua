@@ -29,6 +29,9 @@ local theme                                     = {}
 	local coronafull_widget = require("extra.coronafull")
 	local rates_widget = require("RateWidget.rates")
 	local rates_widget2 = require("extra.rates2")
+	local email_widget = require("extra.email")
+	local news_widget = require("extra.newsboat")
+	local test_widgetagain = require("extra.testwidgetagain")
 
 theme.default_dir                               = require("awful.util").get_themes_dir() .. "default"
 theme.confdir                                   = os.getenv("HOME") .. "/.config/awesome/themes/spring"
@@ -37,14 +40,21 @@ theme.wallpaper                                 = os.getenv("HOME") .. "/.config
 theme.lain_icons                                = os.getenv("HOME") .. "/.config/awesome/themes/spring"
 
 
-theme.font          = "Inconsolata 10"
-theme.taglist_font  = "Inconsolata 13"
-theme.mpd_font  = "Inconsolata 10"
+
+theme.font          = "Iosevka 10"
+theme.taglist_font  = "Iosevka 13"
+theme.mpd_font  = "Iosevka 10"
+
+
+--theme.font          = "Inconsolata 10"
+--theme.taglist_font  = "Inconsolata 13"
+--theme.mpd_font  = "Inconsolata 10"
 
 --theme.tasklist_font = "Inconsolata 12"
 --theme.tasklist_font = "Linux Biolinum 12"
 --theme.tasklist_font = "LiberationSans-Bold 12"
-theme.tasklist_font = "NotoSans-CondensedBold 12"
+--theme.tasklist_font = "NotoSans-CondensedBold 12"
+theme.tasklist_font = "Iosevka12"
 --theme.tasklist_font = "Times New Roman 12"
 
 
@@ -61,7 +71,8 @@ theme.bg_urgent                                 = "#006B8E"
 theme.border_width                              = dpi(3)
 theme.border_normal                             = "#252525"
 --theme.border_focus                              = "#73db95"
-theme.border_focus                              = "#4D5EFF"
+--theme.border_focus                              = "#4D5EFF"
+theme.border_focus                              = "#6AC8C0"
 
 
 --taglist colors
@@ -90,6 +101,9 @@ theme.spr_bottom_right                          = theme.icon_dir .. "/spr_bottom
 theme.spr_side                        		    = theme.icon_dir .. "/spr_side.png"
 theme.spr_left                                  = theme.icon_dir .. "/spr_left.png"
 theme.bar                                       = theme.icon_dir .. "/bar3.png"
+--theme.gradbar                                       = theme.icon_dir .. "/gradbar.png"
+theme.gradbar                                       = theme.icon_dir .. "/gradbarplain.png"
+--theme.bar                                       = theme.icon_dir .. "/bluebox.png"
 theme.bottom_bar                                = theme.icon_dir .. "/bottom_bar.png"
 theme.mpdl                                      = theme.icon_dir .. "/mpd.png"
 theme.mpd_on                                    = theme.icon_dir .. "/mpd_on.png"
@@ -165,32 +179,6 @@ theme.cal = lain.widget.cal({
         font = "Monospace 10"
     }
 })
-
-
-
--- Mail IMAP check
---[[ commented because it needs to be set before use
-theme.mail = lain.widget.imap({
-    timeout  = 180,
-    server   = "server",
-    mail     = "mail",
-    password = "keyring get mail",
-    settings = function()
-        mail_notification_preset.fg = "#FFFFFF"
-        mail  = ""
-        count = ""
-
-        if mailcount > 0 then
-            mail = "Mail "
-            count = mailcount .. " "
-        end
-
-        widget:set_markup(markup.font(theme.font, markup(blue, mail) .. markup("#FFFFFF", count)))
-    end
-})
---]]
-
-
 
 
 
@@ -394,6 +382,7 @@ local spr_bottom_right = wibox.widget.imagebox(theme.spr_bottom_right)
 local spr_side = wibox.widget.imagebox(theme.spr_side)
 local spr_left = wibox.widget.imagebox(theme.spr_left)
 local bar = wibox.widget.imagebox(theme.bar)
+local gradbar = wibox.widget.imagebox(theme.gradbar)
 local bottom_bar = wibox.widget.imagebox(theme.bottom_bar)
 
 --HOW TO MAKE A GRADIENT
@@ -462,9 +451,9 @@ end
             layout = wibox.layout.fixed.horizontal,
  --           first,
             s.mytag,
-	    uptime_widget,
  --           spr_small,
             s.mylayoutbox,
+	    gradbar,
             spr_small,
   --          s.mypromptbox,
         },
@@ -487,11 +476,9 @@ end
 --            spr_very_small,
 --	    awful.widget.watch('bash -c "cat /tmp/ccount"', 3600),
 --	    theme.weather.widget,
-	   test_widget,
  	   coronauk_widget,
- 	   coronaukdscore_widget,
 	    clockwidget,
-	   temperature2_widget,
+--	   temperature2_widget, -- uptime
 --	    volumearc_widget,
 --            cpuwidget,
 --	    awful.widget.watch('bash -c "cat here.txt"', 10),
@@ -504,7 +491,6 @@ end
 
 -- 	create side wibox
 --    s.mysidewibox = awful.wibar({ position = "right", screen = s, width =60, x=0,y=0, border_width = dpi(0), height = s.workarea.height, type = "dock" })
-
     screen[1].mysidewibox = awful.wibar ({ position = "right", screen = s, width = 110, x=0,y=0, border_width = dpi(0), height = s.workarea.height, type = "dock" })
 
     -- Add widgets to the side wibox
@@ -513,19 +499,14 @@ end
         { -- bottom widgets
             layout = wibox.layout.fixed.vertical,
 --            musicwidget2,
-            bar,
+           gradbar, -- colorful bar top right corner
 	   coronafull_widget,
  	   corona_widget,
  	   coronarecovered_widget,
-            bar,
---            spr_side,
---            spr_side,
---	    calendarwidget2,
---	   temperature_widget,
---	   lain.widget.temperature.widget,
---	    awful.widget.watch('bash -c "cat /tmp/ccount"', 15),
+	   temperature2_widget, -- uptime
+	   news_widget,
+   	test_widgetagain,
             rates_widget,
---            rates_widget2,
 	    bat.widget,
 	    theme.weather.widget,
             cpuwidget,

@@ -18,6 +18,9 @@ local tonumber = tonumber
 -- ALSA volume bar
 -- lain.widget.alsabar
 
+
+
+
 local function factory(args)
     local alsabar = {
         colors = {

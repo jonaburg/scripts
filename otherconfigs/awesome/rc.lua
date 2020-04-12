@@ -64,7 +64,7 @@ local function run_once(cmd_arr)
     end
 end
 
-run_once({ "urxvtd", "unclutter -root" }) -- entries must be separated by commas
+--run_once({ "urxvtd", "unclutter -root" }) -- entries must be separated by commas
 
 -- This function implements the XDG autostart specification
 --[[
@@ -94,9 +94,10 @@ local themes = {
     "jontheme",        -- 11
     "winter",          -- 12
     "spring",          -- 13
+    "spring2",          -- 14
 }
 
-local chosen_theme = themes[13]
+local chosen_theme = themes[14]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
 local terminal     = "st"
@@ -109,7 +110,6 @@ local scrlocker    = "slock"
 
 
 -- { define layouts
-
 awful.layout.layouts = {
 --    lain.layout.termfair.center,
 --    lain.layout.centerwork,
@@ -132,9 +132,16 @@ tags = {
 --       		 "/home/jon/.config/awesome/themes/jontheme/icons/titlebar/slot.png",
 --       		 "/home/jon/.config/awesome/themes/jontheme/icons/titlebar/slot.png",
 --           	 "/home/jon/.config/awesome/themes/jontheme/icons/titlebar/slot.png"
+
     }
 }
 
+
+
+--tag.connect_signal("property::selected", function(t)
+    --awesome-spawn("Layout of tag " ..  " is now function ")
+  --  awful.spawn(terminal .. " -e ranger")
+--end)
 
 awful.util.terminal = st
  awful.util.tagnames = { "1", "2", "3", "4", "5", "6", "7","8", "9" }
@@ -166,6 +173,58 @@ awful.util.terminal = st
     --lain.layout.termfair,
     --lain.layout.termfair.center,
 --}
+
+
+--tag.connect_signal("request::select", function(t)
+----	screen.tag[i]:view_only()
+--    if tag.name == "2" then
+--   gears.wallpaper.maximized('/home/jon/.config/awesome/themes/spring2/wall.png', s, true )
+--    else
+--   gears.wallpaper.maximized('/home/jon/.config/awesome/themes/spring2/winter.png', s, true )
+----        awful.titlebar.hide(t)
+--end
+--end)
+
+--for _, t in ipairs(screen.selected_tags)
+--            gears.wallpaper.maximized('/home/jon/.config/awesome/themes/spring2/winter.png', s, true )
+
+--if ipairs(screen[1].tags) ~= 9
+--then
+--            gears.wallpaper.maximized('/home/jon/.config/awesome/themes/spring2/winter.png', s, true )
+--	    awful.spawn(terminal .. " -e ranger")
+--end
+
+----------------------
+---- configuration - edit to your liking
+--wp_index = 1
+--wp_timeout  = 10
+--wp_path = "/home/jon/.config/awesome/themes/spring2/"
+--wp_files = { "wall.png", "winter.png"}
+--
+---- setup the timer
+--wp_timer = timer { timeout = wp_timeout }
+--wp_timer:connect_signal("timeout", function()
+--
+--  -- set wallpaper to current index for all screens
+--  for s = 1, screen.count() do
+--    gears.wallpaper.maximized(wp_path .. wp_files[wp_index], s, true)
+--  end
+--
+--  -- stop the timer (we don't need multiple instances running at the same time)
+--  wp_timer:stop()
+--
+--  -- get next random index
+--  wp_index = math.random( 1, #wp_files)
+--
+--  --restart the timer
+--  wp_timer.timeout = wp_timeout
+--  wp_timer:start()
+--end)
+--
+---- initial start when rc.lua is first run
+--wp_timer:start()
+--------------------------------------
+
 
 awful.util.taglist_buttons = my_table.join(
     awful.button({ }, 1, function(t) t:view_only() end),
@@ -233,6 +292,8 @@ lain.layout.cascade.tile.ncol          = 2
 beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme))
 -- }}}
 
+
+
 -- {{{ Menu
 local myawesomemenu = {
     { "hotkeys", function() return false, hotkeys_popup.show_help end },
@@ -258,36 +319,43 @@ awful.util.mymainmenu = freedesktop.menu.build({
 --menubar.utils.terminal = terminal -- Set the Menubar terminal for applications that require it
 -- }}}
 
--- {{{ Screen
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", function(s)
-    -- Wallpaper
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
-        end
-        gears.wallpaper.maximized(wallpaper, s, true)
-    end
-end)
+---- {{{ Screen
+---- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
+--screen.connect_signal("property::geometry", function(s)
+--    -- Wallpaper
+--    if beautiful.wallpaper then
+--        local wallpaper = beautiful.wallpaper
+--        -- If wallpaper is a function, call it with the screen
+--        if type(wallpaper) == "function" then
+--            wallpaper = wallpaper(s)
+--        end
+--        gears.wallpaper.maximized(wallpaper, s, true)
+--    end
+--end)
 
--- No borders when rearranging only 1 non-floating or maximized client
-screen.connect_signal("arrange", function (s)
-    local only_one = #s.tiled_clients == 1
-    for _, c in pairs(s.clients) do
-        if only_one and not c.floating or c.maximized then
-            c.border_width = 0
-        else
-            c.border_width = beautiful.border_width
-        end
-end
-end)
+---- No borders when rearranging only 1 non-floating or maximized client
+--screen.connect_signal("arrange", function (s)
+--    local only_one = #s.tiled_clients == 1
+--    for _, c in pairs(s.clients) do
+--        if only_one and not c.floating or c.maximized then
+--            c.border_width = 0
+--        else
+--            c.border_width = beautiful.border_width
+--        end
+--end
+--end)
 
 -- Create a wibox for each screen and add it
 --{{
---awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
 awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
+--awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
+
+--for s in screen do
+--beautiful.at_screen_connect(s)
+--end
+
+
+
 
 -- }}}
 
@@ -741,7 +809,7 @@ awful.rules.rules = {
                      screen = awful.screen.preferred,
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen,
 -- FIXED SCREEN GEOEMETRY MAX (e.g. no black bars in MPV)
---                     size_hints_honor = false
+                     size_hints_honor = true
      }
     },
 
@@ -772,6 +840,8 @@ client.connect_signal("manage", function (c)
         awful.placement.no_offscreen(c)
     end
 end)
+
+
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)

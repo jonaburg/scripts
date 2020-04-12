@@ -9,7 +9,7 @@ local markup = lain.util.markup
 
 -- Create the text widget
 local temp_text = wibox.widget{
-    font = "inconsolata 9",
+    font = "inconsolata 10",
     widget = wibox.widget.textbox,
 }
 
@@ -22,7 +22,7 @@ temp_widget:set_bg("#008800")  -- Green background
 temp_widget:set_fg("#ffffff")  -- White text
 
 watch(
-  "uptime", 60,
+  "uptime", 1,
   function(_, stdout, stderr, exitreason, exitcode)
     local temp = nil
 
@@ -34,12 +34,42 @@ watch(
     end
 
     -- Set that as text (not just the raw command)
-    temp_text:set_text(" " .. temp .. " 💹 ")
+    temp_text:set_text(" " .. temp .. " 💹  " .. cpu_now.usage .. "%" )
 --    temp_text:set_markup(markup("#ff2222", " " .. temp .. markup("#000000", " 💹 ")))
-    temp_text:set_markup(markup("#000000", " " .. temp .. markup("#000000", " 💹 ")))
+    temp_text:set_markup(markup("#000000", " " .. temp .. markup("#000000", " 💹  " .. cpu_now.usage .. "%" )))
 end,
   temp_widget
 )
+
+
+function set_tag_color1()
+temp_widget:set_bg("#008800")  -- Green background
+end
+function set_tag_color2()
+temp_widget:set_bg("#FEE715")  -- Orangeish background
+end
+function set_tag_color3()
+temp_widget:set_bg("#15FEC6")  -- Cyan background
+end
+function set_tag_color4()
+temp_widget:set_bg("#3970FF")  -- blue background
+end
+function set_tag_color5()
+temp_widget:set_bg("#FF4A4A")  -- blue background
+end
+
+
+
+screen[1]:connect_signal("tag1", set_tag_color1 )
+screen[1]:connect_signal("tag2", set_tag_color2 )
+screen[1]:connect_signal("tag3", set_tag_color3 )
+screen[1]:connect_signal("tag4", set_tag_color4 )
+screen[1]:connect_signal("tag5", set_tag_color5 )
+screen[1]:connect_signal("tag6", set_tag_color3 )
+
+
+
+
 
 temp_text:set_text(" ??? ")
 

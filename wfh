@@ -1,0 +1,14 @@
+#!/bin/bash
+#during wfh period, using barrier for IO/monitor input switching
+
+function tolaptop (){
+#going to laptop via barrier
+sudo ddcutil setvcp --bus 2 60 0x01
+}
+
+function topc (){
+#going back to pc after moving mouse to barrier
+sudo ddcutil setvcp --bus 2 60 0x03
+}
+
+"$@"
