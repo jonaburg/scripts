@@ -117,7 +117,7 @@ watch (
 function show_brit()
     awful.spawn.easy_async([[bash -c 'cat /tmp/coronauk']],
         function(stdout, stderr, reason, exit_code)
-            naughty.notify{
+           corona.notification = naughty.notify{
                 text = stdout,
                 title = "court writ yer honor",
                 timeout = 30, hover_timeout = 5,
@@ -131,7 +131,6 @@ function show_brit()
         end
     )
 end
-
 
 temp_text:set_text(" ??? ")
 return temp2_widget
