@@ -1,6 +1,7 @@
 #!/bin/bash
 #color temperature/brightness adjustment scripts (saves to file)
 #Go to the directory where the scripts are held.
+# NEWER VERSIONS USE redshift -PO {num}
 
 cd ~/.local/bin/utilities || exit
 
@@ -12,13 +13,11 @@ num=$(<RV)
 num2=$(<BV)
 
 
-colder() {
+colder(){
 #Check if the number is under an arbitrary limit, and if so increment by X.
-
 if (( $num <= 6500 ))
 then
 	echo "$((num+=250))" > RV
-
 	redshift -O ${num}
 	cat RV
 	dunstify -r 454 -u low "Colour Temperature :  $(<RV)"
@@ -26,13 +25,11 @@ fi
 }
 
 
-warmer() {
+warmer(){
 #Check if the number is under an arbitrary limit, and if so increment by X.
-
 if (( $num >= 1500 ))
 then
 	echo "$((num-=250))" > RV
-
 	redshift -O ${num}
 	cat RV
 	dunstify -r 454 -u low "Colour Temperature :  $(<RV)"
@@ -44,7 +41,6 @@ brighter(){
 if ! [ -f BV ]
 then echo 100 > BV
 fi
-
 if (( $num2 < 100 ))
 then echo "$((num2+=25))" > BV
 sudo ddcutil setvcp --bus 1 10 $num2

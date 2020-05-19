@@ -3,12 +3,16 @@
 
 function tolaptop (){
 #going to laptop via barrier
-sudo ddcutil setvcp --bus 2 60 0x01
+sudo ddcutil setvcp --bus 1 60 0x01
 }
 
 function topc (){
 #going back to pc after moving mouse to barrier
-sudo ddcutil setvcp --bus 2 60 0x03
+sudo ddcutil setvcp --bus 1 60 0x03
+}
+
+function towindows(){
+[[ $(sudo virsh list --all | grep 2 | awk {'print $3'}) == "running" ]] && sudo ddcutil setvcp --bus 1 60 0x11  ||  notify-send "VM paused.. consider starting it"
 }
 
 "$@"

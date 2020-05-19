@@ -2,7 +2,7 @@
 
 #Xresources theme Switcher
 
-choiceXresource=$(printf "$(ls -lar ~/Documents/Xresources/ | awk {'print $9'}) " | rofi -dmenu -config /usr/share/rofi/themes/gruvjon.rasi -p "Pick an Xresources Theme")
+choiceXresource=$(printf "$(ls -lar ~/Documents/Xresources/ | awk {'print $9'}) " | rofi -dmenu -config /usr/share/rofi/themes/defaulo.rasi -p "Pick an Xresources Theme")
 
 xrdb -merge ~/Documents/Xresources/$choiceXresource
 

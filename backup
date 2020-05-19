@@ -1,0 +1,33 @@
+#!/bin/bash
+
+
+
+fullsync(){
+
+# establishes README for time of this backup
+echo "This backup corresponds to:" $(date) > README
+
+#syncing ~/.config dotfiles
+
+rsync -av ~/.config/awesome ~/.local/bin/backups/
+rsync -av ~/.config/dunst ~/.local/bin/backups/
+rsync -av ~/.config/fontconfig ~/.local/bin/backups/
+rsync -av ~/.config/lf ~/.local/bin/backups/
+rsync -av ~/.config/ncmpcpp ~/.local/bin/backups/
+rsync -av ~/.config/newsboat ~/.local/bin/backups/
+rsync -av ~/.config/nvim ~/.local/bin/backups/
+rsync -av ~/.config/rofi ~/.local/bin/backups/
+rsync -av ~/.config/st ~/.local/bin/backups/
+rsync -av ~/.config/sxhkd ~/.local/bin/backups/
+rsync -av ~/.config/sxiv ~/.local/bin/backups/
+rsync -av ~/.config/zathura ~/.local/bin/backups/
+rsync -av ~/.config/compton.conf ~/.local/bin/backups/
+rsync -av ~/.config/emoji ~/.local/bin/backups/
+rsync -av ~/.config/fontawesome ~/.local/bin/backups/
+
+#syncing homedir files
+
+}
+
+
+"$@"
